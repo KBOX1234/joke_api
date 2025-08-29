@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 
-class joke_genorator {
+class joke_generator {
     private:
         std::vector<std::string> nouns;
         std::vector<std::string> verbs;
@@ -16,4 +16,4 @@ class joke_genorator {
         void load_word_json(const std::string& fname);
 };
 
-extern joke_genorator joke_engin;
+extern joke_generator joke_engin;

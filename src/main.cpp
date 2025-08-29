@@ -3,14 +3,18 @@
 //
 
 #include "../include/joke_engin.hpp"
-joke_genorator joke_engin;
+#include "../include/httplib.h"
+
+joke_generator joke_engin;  // global
 
 int main() {
     joke_engin.load_word_json("words.json");
 
-    for (int i = 0; i < 90000; i++) {
-        std::cout << joke_engin.get_random_joke() << std::endl;
-    }
+    httplib::Server svr;
 
-    return 0;
+    svr.Get("/joke", [](const httplib::Request& req, httplib::Response& res) {
+        res.set_content("{\"joke\": \"" + joke_engin.get_random_joke() + "\"}", "application/json");
+    });
+
+    svr.listen("0.0.0.0", 8080);
 }

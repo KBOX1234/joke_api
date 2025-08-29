@@ -8,7 +8,7 @@
 using json = nlohmann::json;
 #include "../include/io.hpp"
 
-std::string joke_genorator::get_random_joke() {
+std::string joke_generator::get_random_joke() {
     std::random_device rd;
     std::mt19937 gen(rd());
 
@@ -57,7 +57,7 @@ std::string joke_genorator::get_random_joke() {
 }
 
 
-void joke_genorator::load_word_json(const std::string &fname) {
+void joke_generator::load_word_json(const std::string &fname) {
 
     std::string json_str = easy_file_ops::load_text_file(fname);
 

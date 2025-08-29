@@ -6,7 +6,6 @@
 class joke_genorator {
     private:
         std::vector<std::string> nouns;
-        std::vector<std::string> pronouns;
         std::vector<std::string> verbs;
         std::vector<std::string> adverbs;
         std::vector<std::string> adjectives;

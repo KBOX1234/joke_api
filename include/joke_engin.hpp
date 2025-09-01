@@ -16,4 +16,4 @@ class joke_generator {
         void load_word_json(const std::string& fname);
 };
 
-extern joke_generator joke_engin;
+extern joke_generator joke_engine;

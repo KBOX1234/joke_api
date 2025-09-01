@@ -4,17 +4,14 @@
 
 #include "../include/joke_engin.hpp"
 #include "../include/httplib.h"
+#include "../include/api.hpp"
 
-joke_generator joke_engin;  // global
+api_handler api;
+
+joke_generator joke_engine;  // global
 
 int main() {
-    joke_engin.load_word_json("words.json");
+    joke_engine.load_word_json("words.json");
 
-    httplib::Server svr;
-
-    svr.Get("/joke", [](const httplib::Request& req, httplib::Response& res) {
-        res.set_content("{\"joke\": \"" + joke_engin.get_random_joke() + "\"}", "application/json");
-    });
-
-    svr.listen("0.0.0.0", 8080);
+    api.start();
 }

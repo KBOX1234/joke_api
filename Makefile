@@ -3,9 +3,9 @@ CXX := g++
 
 # Detect OS
 ifeq ($(OS),Windows_NT)
-  LDFLAGS := -lws2_32
+  LDFLAGS := -lws2_32 -lsodium
 else
-  LDFLAGS :=
+  LDFLAGS := -lsodium
 endif
 
 # Build mode (default = debug)
@@ -16,6 +16,8 @@ ifeq ($(BUILD),debug)
 else ifeq ($(BUILD),release)
   CXXFLAGS := -Wall -Wextra -std=c++17 -Iinclude -O2 -DNDEBUG
 endif
+
+
 
 # Project name (final executable)
 TARGET := main

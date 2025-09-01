@@ -68,19 +68,173 @@ void joke_generator::load_word_json(const std::string &fname) {
     json adverb_j = json_obj["adverbs"];
     json adjective_j = json_obj["adjectives"];
 
-    for (int i = 0; i < noun_j.size(); i++) {
+    for (unsigned long i = 0; i < noun_j.size(); i++) {
         nouns.push_back(noun_j[i]);
     }
 
-    for (int i = 0; i < verb_j.size(); i++) {
+    for (unsigned long i = 0; i < verb_j.size(); i++) {
         verbs.push_back(verb_j[i]);
     }
 
-    for (int i = 0; i < adverb_j.size(); i++) {
+    for (unsigned long i = 0; i < adverb_j.size(); i++) {
         adverbs.push_back(adverb_j[i]);
     }
 
-    for (int i = 0; i < adjective_j.size(); i++) {
+    for (unsigned long i = 0; i < adjective_j.size(); i++) {
         adjectives.push_back(adjective_j[i]);
     }
 }
+//haha funny because obs
+std::string word::serialize_to_json() {
+    json j_obs;
+
+    j_obs["age"] = age;
+    j_obs["word"] = word_str;
+
+    j_obs.dump();
+}
+
+void word_bank::add_adjective(const std::string &word_w) {
+    word new_word;
+
+    time(&new_word.age);
+
+    new_word.word_str = word_w;
+
+    adjectives.push_back(new_word);
+}
+
+void word_bank::add_adverb(const std::string &word_w) {
+    word new_word;
+
+    time(&new_word.age);
+
+    new_word.word_str = word_w;
+
+    adverbs.push_back(new_word);
+}
+
+void word_bank::add_verb(const std::string &word_w) {
+    word new_word;
+
+    time(&new_word.age);
+
+    new_word.word_str = word_w;
+
+    verbs.push_back(new_word);
+}
+
+void word_bank::add_noun(const std::string &word_w) {
+    word new_word;
+
+    time(&new_word.age);
+
+    new_word.word_str = word_w;
+
+    nouns.push_back(new_word);
+}
+
+word word_bank::get_first_word_instance(const std::string &word_w) {
+    for (unsigned long i = 0; i < nouns.size(); i++) {
+        if (nouns[i].word_str == word_w) {
+            return nouns[i];
+        }
+    }
+    for (unsigned long i = 0; i < verbs.size(); i++) {
+        if (verbs[i].word_str == word_w) {
+            return verbs[i];
+        }
+    }
+    for (unsigned long i = 0; i < adverbs.size(); i++) {
+        if (adverbs[i].word_str == word_w) {
+            return adverbs[i];
+        }
+    }
+    for (unsigned long i = 0; i < adjectives.size(); i++) {
+        if (adjectives[i].word_str == word_w) {
+            return adjectives[i];
+        }
+    }
+
+    word f;
+    f.age = 0;
+
+    return f;
+
+
+}
+
+word word_bank::get_latest_word_instance(const std::string &word_w) {
+    for (unsigned long i = nouns.size() - 1; i > 0; i--) {
+        if (nouns[i].word_str == word_w) {
+            return nouns[i];
+        }
+    }
+    for (unsigned long i = verbs.size() - 1; i > 0; i--) {
+        if (verbs[i].word_str == word_w) {
+            return verbs[i];
+        }
+    }
+    for (unsigned long i = adverbs.size() - 1; i > 0; i--) {
+        if (adverbs[i].word_str == word_w) {
+            return adverbs[i];
+        }
+    }
+    for (unsigned long i = adjectives.size() - 1; i > 0; i--) {
+        if (adjectives[i].word_str == word_w) {
+            return adjectives[i];
+        }
+    }
+
+    word f;
+    f.age = 0;
+
+    return f;
+}
+
+std::string word_bank::serialise_to_json() {
+    json j_obj;
+
+    for (unsigned long i = 0; i < nouns.size(); i++) {
+        j_obj["nouns"][i] = nouns[i].serialize_to_json();
+    }
+    for (unsigned long i = 0; i < adverbs.size(); i++) {
+        j_obj["adverbs"][i] = adverbs[i].serialize_to_json();
+    }
+    for (unsigned long i = 0; i < verbs.size(); i++) {
+        j_obj["verbs"][i] = verbs[i].serialize_to_json();
+    }
+    for (unsigned long i = 0; i < adjectives.size(); i++) {
+        j_obj["adjectives"][i] = adjectives[i].serialize_to_json();
+    }
+
+    return j_obj.dump(4);
+}
+
+int word_bank::word_count(const std::string &word_w) {
+    int count = 0;
+    for (unsigned long i = nouns.size() - 1; i > 0; i--) {
+        if (nouns[i].word_str == word_w) {
+            count++;
+        }
+    }
+    for (unsigned long i = verbs.size() - 1; i > 0; i--) {
+        if (verbs[i].word_str == word_w) {
+            count++;
+        }
+    }
+    for (unsigned long i = adverbs.size() - 1; i > 0; i--) {
+        if (adverbs[i].word_str == word_w) {
+            count++;
+        }
+    }
+    for (unsigned long i = adjectives.size() - 1; i > 0; i--) {
+        if (adjectives[i].word_str == word_w) {
+            count++;
+        }
+    }
+
+}
+
+
+

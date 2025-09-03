@@ -14,6 +14,8 @@ class joke_generator {
         std::string get_random_joke();
 
         void load_word_json(const std::string& fname);
+
+        void add_word(const std::string& word, char type);
 };
 
 #define NOUN 0

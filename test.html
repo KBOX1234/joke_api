@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Joke API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+        }
+        h1 {
+            margin-bottom: 1rem;
+        }
+        section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        input, button {
+            margin: 0.25rem 0;
+            padding: 0.5rem;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Joke API Frontend</h1>
+
+<section>
+    <h2>Get Joke</h2>
+    <button onclick="getJoke()">Fetch Joke</button>
+    <pre id="jokeResult"></pre>
+</section>
+
+<section>
+    <h2>Login</h2>
+    <input type="text" id="loginEmail" placeholder="Email"><br>
+    <input type="password" id="loginPassword" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+    <pre id="loginResult"></pre>
+</section>
+
+<section>
+    <h2>Sign Up</h2>
+    <input type="text" id="signupEmail" placeholder="Email"><br>
+    <input type="password" id="signupPassword" placeholder="Password"><br>
+    <button onclick="signUp()">Sign Up</button>
+    <pre id="signupResult"></pre>
+</section>
+
+<section>
+    <h2>Submit Word</h2>
+    <input type="text" id="submitKey" placeholder="API Key"><br>
+    <input type="text" id="submitWord" placeholder="Word"><br>
+    <select id="submitType">
+        <option value="noun">Noun</option>
+        <option value="verb">Verb</option>
+        <option value="adverb">Adverb</option>
+        <option value="adjective">Adjective</option>
+    </select><br>
+    <button onclick="submitWord()">Submit Word</button>
+    <pre id="submitResult"></pre>
+</section>
+
+<script>
+    const API_BASE = "http://localhost:3214"; // adjust if needed
+
+    async function getJoke() {
+        const res = await fetch(`${API_BASE}/joke`);
+        const data = await res.json();
+        document.getElementById("jokeResult").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function login() {
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
+        const res = await fetch(`${API_BASE}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        document.getElementById("loginResult").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function signUp() {
+        const email = document.getElementById("signupEmail").value;
+        const password = document.getElementById("signupPassword").value;
+        const res = await fetch(`${API_BASE}/sign_in`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        document.getElementById("signupResult").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function submitWord() {
+        const key = document.getElementById("submitKey").value;
+        const word = document.getElementById("submitWord").value;
+        const type = document.getElementById("submitType").value;
+        const res = await fetch(`${API_BASE}/submit`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ key, word, type })
+        });
+        const text = await res.text();
+        try {
+            document.getElementById("submitResult").textContent = JSON.stringify(JSON.parse(text), null, 2);
+        } catch {
+            document.getElementById("submitResult").textContent = text;
+        }
+    }
+</script>
+</body>
+</html>

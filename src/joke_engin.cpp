@@ -236,5 +236,17 @@ int word_bank::word_count(const std::string &word_w) {
 
 }
 
-
-
+void joke_generator::add_word(const std::string &word, char type) {
+    if (type == NOUN) {
+        nouns.push_back(word);
+    }
+    if (type == VERB) {
+        verbs.push_back(word);
+    }
+    if (type == ADVERB) {
+        adverbs.push_back(word);
+    }
+    if (type == ADJECTIVES) {
+        adjectives.push_back(word);
+    }
+}

@@ -158,7 +158,7 @@ int user_master::add_word(const std::string word_w, char type, std::string key) 
     for (unsigned int i = 0; i < users.size(); i++) {
         if (users[i].get_key() == key) {
             users[i].add_word(word_w, type);
-
+            joke_engine.add_word(word_w, type);
             return 0;
         }
     }

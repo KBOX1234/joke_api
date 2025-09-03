@@ -10,6 +10,9 @@ using json = nlohmann::json;
 
 void api_handler::joke_api() {
     svr.Get("/joke", [](const httplib::Request& req, httplib::Response& res) {
+        res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        res.set_header("Access-Control-Allow-Headers", "Content-Type");
         res.set_content("{\"joke\": \"" + joke_engine.get_random_joke() + "\"}", "application/json");
 
     });
@@ -21,6 +24,12 @@ void api_handler::start() {
     login_api();
 
     submit_api();
+
+    svr.Options(".*", [](const httplib::Request&, httplib::Response& res) {
+        res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        res.set_header("Access-Control-Allow-Headers", "Content-Type");
+    });
 
     svr.listen("0.0.0.0", PORT);
 }
@@ -34,6 +43,10 @@ void api_handler::login_api() {
         std::string client_ip = req.remote_addr;
 
         json body_json = json::parse(body);
+
+        res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        res.set_header("Access-Control-Allow-Headers", "Content-Type");
+        res.set_header("Access-Control-Allow-Origin", "*");
 
         if (!body_json.contains("email") || !body_json.contains("password")) {
             res.set_content("error", "text/plain");
@@ -69,6 +82,10 @@ void api_handler::login_api() {
 
         json body_json = json::parse(body);
 
+        res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        res.set_header("Access-Control-Allow-Headers", "Content-Type");
+        res.set_header("Access-Control-Allow-Origin", "*");
+
         if (!body_json.contains("email") || !body_json.contains("password")) {
             res.set_content("error", "text/plain");
         }
@@ -102,6 +119,10 @@ void api_handler::submit_api() {
         std::string body = req.body;
 
         json body_json = json::parse(body);
+
+        res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+        res.set_header("Access-Control-Allow-Headers", "Content-Type");
+        res.set_header("Access-Control-Allow-Origin", "*");
 
         if (!body_json.contains("key") || !body_json.contains("word") || !body_json.contains("type")) {
             res.set_content("error", "text/plain");
